@@ -43,7 +43,7 @@ public class StructuredDataService : IStructuredDataService
         throw new NotImplementedException();
     }
     
-    public string GetFaqSchema(List<BlockListItem> faqItems)
+    public string GetFaqSchema(List<IPublishedElement> faqItems)
     {
         // Create a list of Question objects
         var faqList = new List<Question>();
@@ -51,10 +51,10 @@ public class StructuredDataService : IStructuredDataService
         {
             var question = new Question
             {
-                Name = faqItem.Content.Value<string>("question"),
+                Name = faqItem.Value<string>("question"),
                 AcceptedAnswer = new Answer
                 {
-                    Text = faqItem.Content.Value<HtmlEncodedString>("answer")
+                    Text = faqItem.Value<HtmlEncodedString>("answer")
                 }
             };
             faqList.Add(question);

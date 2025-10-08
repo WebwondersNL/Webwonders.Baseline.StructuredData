@@ -8,6 +8,6 @@ public interface IStructuredDataService
     public Task<string> BuildSchemaAsync(IPublishedContent content);
     public Task<string> BuildSchemaAsync(int contentId);
     
-    public string GetFaqSchema(List<BlockListItem> faqItems);
+    public string GetFaqSchema(List<IPublishedElement> faqItems);
 }
 
