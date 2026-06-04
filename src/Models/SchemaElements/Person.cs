@@ -1,5 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 using Webwonders.Baseline.StructuredData.Models.Base;
+using Webwonders.Baseline.StructuredData.Models.Schemas;
 
 namespace Webwonders.Baseline.StructuredData.Models.SchemaElements;
 
@@ -25,9 +26,7 @@ public class Person : SchemaEntity
     
     [JsonPropertyName("description")]
     public string? Description { get; set; }
-    
-    /* Temporarily Disabled
+
     [JsonPropertyName("worksFor")]
-    public Organization? WorksFor { get; set; } = new Organization();
-    */
+    public Organization? WorksFor { get; set; }
 }
