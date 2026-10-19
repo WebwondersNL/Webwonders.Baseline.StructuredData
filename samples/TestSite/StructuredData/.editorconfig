@@ -1,0 +1,4 @@
+[*.cs]
+# Schema.NET's implicit conversions (string -> OneOrMany<string> etc.) aren't annotated for null, but null and
+# empty values are simply treated as "not set". Assigning optional Umbraco properties directly is fine.
+dotnet_diagnostic.CS8604.severity = none

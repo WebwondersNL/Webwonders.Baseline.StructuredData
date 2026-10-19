@@ -1,0 +1,47 @@
+﻿@inherits UmbracoViewPage
+@{
+    Layout = "master.cshtml";
+}
+
+<h1>@Model.Name</h1>
+
+@if (Model is IPageMeta { MetaDescription: { Length: > 0 } description })
+{
+    <p class="lead">@description</p>
+}
+
+@switch (Model)
+{
+    case Home home:
+        <section class="card">
+            <h2>@home.CompanyName</h2>
+            <p>@home.StreetAddress, @home.PostalCode @home.City (@home.Country)</p>
+            <p>@home.Telephone · @home.Email</p>
+            <p class="hint">These details are on the Home node. <code>OrganizationSchemaProvider</code> turns them into an Organization on every page.</p>
+        </section>
+        break;
+
+    case BlogOverview blog:
+        <ul class="list">
+            @foreach (var post in blog.Children<BlogPost>() ?? Enumerable.Empty<BlogPost>())
+            {
+                <li><a href="@post.Url()">@post.Name</a> <span class="meta">@post.PublishDate.ToString("d MMMM yyyy")</span></li>
+            }
+        </ul>
+        break;
+
+    case BlogPost post:
+        <p class="meta">By @post.AuthorName on @post.PublishDate.ToString("d MMMM yyyy")</p>
+        <p>@post.Excerpt</p>
+        break;
+
+    case ContentPage contentPage:
+        @foreach (var faq in contentPage.ContentBlocks?.Select(b => b.Content).OfType<FaqItem>() ?? Enumerable.Empty<FaqItem>())
+        {
+            <details class="faq">
+                <summary>@faq.Question</summary>
+                <p>@faq.Answer</p>
+            </details>
+        }
+        break;
+}

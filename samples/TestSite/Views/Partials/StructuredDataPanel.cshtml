@@ -1,0 +1,52 @@
+@using Webwonders.Baseline.StructuredData.Abstractions
+@using Webwonders.Baseline.StructuredData.Core
+@inject IStructuredDataRenderer Renderer
+@*
+    Test-site only: shows the structured data the <structured-data /> tag renders in <head>,
+    and which provider added each node. Not something a real site would render.
+*@
+@{
+    var graph = await Renderer.BuildGraphAsync();
+    var json = graph is null ? null : JsonLdSerializer.Serialize(graph, writeIndented: true);
+}
+
+<aside class="sd-panel">
+    <div class="sd-header">
+        <h2>Structured data on this page</h2>
+        @if (json is not null)
+        {
+            <button type="button" class="sd-copy" onclick="navigator.clipboard.writeText(document.getElementById('sd-json').textContent).then(() => this.textContent = 'Copied')">Copy JSON-LD</button>
+        }
+    </div>
+
+    @if (graph is null || graph.Nodes.Count == 0)
+    {
+        <p>No structured data for this page.</p>
+    }
+    else
+    {
+        <table class="sd-nodes">
+            <thead>
+                <tr><th>@@type</th><th>@@id</th><th>Added by</th></tr>
+            </thead>
+            <tbody>
+                @foreach (var node in graph.Nodes)
+                {
+                    <tr>
+                        <td><span class="sd-type">@node.Type</span></td>
+                        <td><code>@(node.Id?.Fragment is { Length: > 0 } fragment ? fragment : node.Id?.ToString() ?? "—")</code></td>
+                        <td>@string.Join(", ", graph.GetSources(node))</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <pre id="sd-json">@json</pre>
+
+        <p class="hint">
+            Paste the JSON-LD into <a href="https://validator.schema.org/" target="_blank" rel="noopener">validator.schema.org</a>
+            or Google's <a href="https://search.google.com/test/rich-results" target="_blank" rel="noopener">Rich Results Test</a>.
+            Missing required properties are also logged as warnings while running in Development.
+        </p>
+    }
+</aside>

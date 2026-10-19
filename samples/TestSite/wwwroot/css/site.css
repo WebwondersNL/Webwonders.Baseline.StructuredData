@@ -1,0 +1,93 @@
+:root {
+    --bg: #f6f7f9;
+    --surface: #ffffff;
+    --text: #1d2330;
+    --muted: #5f6878;
+    --border: #e1e4ea;
+    --accent: #3544b1;
+    --code-bg: #121826;
+    --code-text: #d7deea;
+}
+
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.5;
+}
+
+a { color: var(--accent); }
+
+.site-header {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem 2rem;
+    align-items: center;
+    padding: 1rem 2rem;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+}
+
+.brand { font-weight: 700; text-decoration: none; color: var(--text); }
+
+.site-header nav { display: flex; flex-wrap: wrap; gap: .25rem 1rem; }
+.site-header nav a { text-decoration: none; color: var(--muted); }
+.site-header nav a.active { color: var(--accent); font-weight: 600; }
+
+.content, .sd-panel { max-width: 960px; margin: 2rem auto; padding: 0 2rem; }
+
+.lead { font-size: 1.15rem; color: var(--muted); }
+.meta { color: var(--muted); font-size: .9rem; }
+.hint { color: var(--muted); font-size: .875rem; }
+
+.card, .faq {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1rem 1.25rem;
+    margin-bottom: .75rem;
+}
+
+.faq summary { cursor: pointer; font-weight: 600; }
+.list li { margin-bottom: .5rem; }
+
+.sd-panel {
+    border-top: 2px dashed var(--border);
+    padding-top: 1.5rem;
+}
+
+.sd-header { display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+.sd-header h2 { margin: 0; font-size: 1.1rem; }
+
+.sd-copy {
+    border: 1px solid var(--border);
+    background: var(--surface);
+    border-radius: 6px;
+    padding: .4rem .8rem;
+    cursor: pointer;
+}
+
+.sd-nodes { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: .9rem; }
+.sd-nodes th, .sd-nodes td { text-align: left; padding: .45rem .6rem; border-bottom: 1px solid var(--border); }
+.sd-nodes th { color: var(--muted); font-weight: 600; }
+.sd-type {
+    display: inline-block;
+    padding: .1rem .5rem;
+    border-radius: 999px;
+    background: #e7e9fb;
+    color: var(--accent);
+    font-weight: 600;
+}
+
+#sd-json {
+    background: var(--code-bg);
+    color: var(--code-text);
+    padding: 1rem;
+    border-radius: 8px;
+    overflow-x: auto;
+    font-size: .8rem;
+    line-height: 1.45;
+}
