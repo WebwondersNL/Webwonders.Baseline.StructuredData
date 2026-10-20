@@ -17,6 +17,8 @@ internal sealed class SchemaIdFactory(ISchemaContext context) : ISchemaIdFactory
 
     public Uri ForCurrentPage(string fragment) => For(context.Content, fragment);
 
+    // Resolve "#fragment" against the url rather than using UriBuilder: UriBuilder always writes the port,
+    // so https ids came out as https://site.nl:443/#webpage and no longer matched the page's url.
     private static Uri WithFragment(Uri url, string fragment)
-        => new UriBuilder(url) { Fragment = fragment.TrimStart('#') }.Uri;
+        => new(url, "#" + fragment.TrimStart('#'));
 }

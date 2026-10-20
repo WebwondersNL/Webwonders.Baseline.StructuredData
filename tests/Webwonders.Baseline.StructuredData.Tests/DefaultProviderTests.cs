@@ -59,6 +59,20 @@ public class DefaultProviderTests
     }
 
     [Fact]
+    public async Task Ids_are_serialized_without_the_default_port()
+    {
+        // Uri.Equals treats https://example.nl:443/ and https://example.nl/ as equal, so compare the emitted string.
+        var (home, _, post) = TestContent.Tree();
+        var context = TestContent.Context(post, new[] { home, post });
+
+        await RunAsync(context, new WebPageProvider(Options()));
+
+        var page = context.Graph.Nodes.OfType<WebPage>().Single();
+        Assert.Equal("https://example.nl/blog/my-post/#webpage", page.Id!.OriginalString);
+        Assert.Equal("https://example.nl/#site", context.Ids.ForSite("site").OriginalString);
+    }
+
+    [Fact]
     public async Task Defaults_can_be_switched_off_through_options()
     {
         var post = TestContent.Tree().Post;
